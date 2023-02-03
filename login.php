@@ -4,7 +4,7 @@ if($_POST){
 
     if($_POST['usuario']=="develoteca" && ($_POST['password']=="123")){
 
-        $_SESSION['usuario']=true;
+        $_SESSION['usuario']="develoteca";
 
         // echo 'Logueado, ok'; 
         header("location:index.php");

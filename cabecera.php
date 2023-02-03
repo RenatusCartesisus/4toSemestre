@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if(isset($_SESSION['usuario'])!="develoteca"){
+header("location:login.php");
+}
+
+
 ?>
 
 
@@ -20,7 +25,7 @@ session_start();
     
     <a href="index.php">Inicio</a> |
     <a href="portafolio.php">Portafolio</a> |
-    <a href="index.php">Cerrar</a> |
+    <a href="cerrar.php">Cerrar</a> |
 
 </div>
 
