@@ -1,4 +1,12 @@
 <?php include ("cabecera.php");?>
+<?php include ("conexion.php"); ?>
+<?php 
+
+$consultar = new Conectar();
+$resultados = $consultar->consultar("SELECT * FROM `proyectos`");
+
+?>
+
 <div class="row align-items-md-stretch">
     <div class="col-md-6">
         <div
@@ -22,7 +30,32 @@
 <style>
     .col-md-6{
         margin-top: 20px;
+        margin-bottom: 20px;
     }
 </style>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+<?php foreach($resultados as $resultado){?>
+
+    <div class="col">
+    <div class="card h-100">
+      <img src="imagenes/<?php echo $resultado['imagen'];?>" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"><?php echo $resultado['nombre'];?></h5>
+        <p class="card-text"><?php echo $resultado['descripcion'];?></p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Last updated 3 mins ago</small>
+      </div>
+    </div>
+</div>
+    <?php } ?>
+</div>
+ 
+  
+
+    
+
+
 
 <?php include ("pie.php");?>

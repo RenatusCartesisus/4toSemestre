@@ -19,11 +19,8 @@ if($_POST){
 $conexion = new Conectar();
 $sql = "INSERT INTO `proyectos` (`id`, `nombre`, `imagen`, `descripcion`) VALUES (NULL, '$nombre', '$imagen', '$descripcion');";
 $conexion->ejecutar($sql);
-
+header("location:portafolio.php");
 }
-
-$consultar = new Conectar();
-$resultados = $consultar->consultar("SELECT * FROM `proyectos`");
 
 // print_r($resultado);------------------------------------------
 
@@ -34,16 +31,18 @@ if($_GET){
     $id = $_GET['borrar'];
     $borrar = new Conectar();
 
-    $imagen = $borrar->consultar("SELECT imagen FROM `proyectos` WHERE id=".$id);
+    $image = $borrar->consultar("SELECT imagen FROM `proyectos` WHERE id=".$id);
 
-    print_r($imagen);
+    // print_r($image[0]['imagen']);
 
-    // $sql = "DELETE FROM proyectos WHERE `proyectos`.`id` =".$id; 
-    // $borrar->ejecutar($sql);
+    unlink("imagenes/".$image[0]['imagen']);
 
+    $sql = "DELETE FROM proyectos WHERE `proyectos`.`id` =".$id; 
+    $borrar->ejecutar($sql);
     header("location:portafolio.php");
-    
 }
+$consultar = new Conectar();
+$resultados = $consultar->consultar("SELECT * FROM `proyectos`");
 
 ?>
 
@@ -60,11 +59,11 @@ if($_GET){
 
 <label >Nombre del proyecto:</label><input type="text" name="nombre" class="form-control" required> 
 <br>
-<label >Nombre del archivo:</label><input type="file" name="archivo" class="form-control">
+<label >Nombre del archivo:</label><input type="file" name="archivo" class="form-control" required>
 <br>
 <div class="mb-3">
   <label for="" class="form-label">Detalles</label>
-  <textarea class="form-control" name="descripcion" rows="3"></textarea>
+  <textarea class="form-control" name="descripcion" rows="3" required></textarea>
 </div>
 
 
@@ -93,7 +92,11 @@ if($_GET){
             <tr class="">
                 <td><?php echo $resultado['id']; ?></td>
                 <td><?php echo $resultado['nombre']; ?></td>
-                <td><?php echo $resultado['imagen']; ?></td>
+                <td>
+
+                    <img width="100px" src="imagenes/<?php echo $resultado['imagen']; ?>" alt="">
+    
+                </td>
                 <td><?php echo $resultado['descripcion'];?></td>
                 <td><a name="" id="" class="btn btn-danger" href="?borrar=<?php echo $resultado['id']?>"><i class="fa-sharp fa-solid fa-trash"></i></a></td>
             </tr>
